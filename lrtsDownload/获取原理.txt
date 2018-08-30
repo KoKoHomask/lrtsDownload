@@ -1,0 +1,38 @@
+﻿资源页面:http://www.lrts.me/book/39068
+
+链接上面<a class="player-trigger " player-info="type=2&amp;resourcesid=39068&amp;sections=1">第001集_青铜簋</a>
+type=2
+则获取播放列表页面:
+http://www.lrts.me/ajax/playlist/type/bookid/number
+
+播放列表页面:
+class为section的<div>中的所有<li>内
+class为column1的<div>内所有
+<input>
+
+<input>说明:
+name=source	 value=声音文件链接
+name=sectionid 	value=声音文件ID(例如:215321538)
+name=player-r-name 	value=文件名(例：第002集_金宝阁)
+name=share-fatherEntityId 	value=书籍id(例:39068)
+name=share-entityType 	value=xtype
+
+如果source的value为空那么从下面地址获取声音文件信息
+http://www.lrts.me/ajax/path/xtype/书籍id/声音文件ID
+
+例：http://www.lrts.me/ajax/path/4/39068/215321538
+
+收到反馈数据
+<WebResult>
+<status>success</status>
+<errMsg/>
+<errCode/>
+<data>
+http://vb.wting.info/fiction/dushi/cjjlw/jadp1pe8.mp3?token=rgSRi8GkjMJuj8Sm5DapaY2QwU8-txmdiXWxaIT3iNxBvrdOhc4Vzw**&e=1535603370551&t=2&res=215321538&sign=0e223bfe6244c0ed70e3d1e513386e82
+</data>
+<returnUrl/>
+<fileId>-1</fileId>
+</WebResult>
+
+声音文件为
+http://vb.wting.info/fiction/dushi/cjjlw/jadp1pe8.mp3?token=rgSRi8GkjMJuj8Sm5DapaY2QwU8-txmdiXWxaIT3iNxBvrdOhc4Vzw**&e=1535603370551&t=2&res=215321538&sign=0e223bfe6244c0ed70e3d1e513386e82
