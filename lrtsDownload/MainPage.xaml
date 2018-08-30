@@ -6,9 +6,26 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" SizeChanged="Page_SizeChanged">
 
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="TopRowDefinition" Height="100*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+                <TextBox Name="tbSearch"  Width="700" PlaceholderText="输入要解析的网址..."/>
+                <Button Name="btnSearch" Click="btnSearch_Click" Content="&#xE1A3;" Height="{Binding Path=Height,ElementName=tbSearch,Mode=OneWay}" FontFamily="Segoe MDL2 Assets" FontSize="22"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center" Name="prWait"  Width="80" Height="80" IsActive="True" />
+            <ScrollViewer>
+                <StackPanel Name="spResult">
+                    
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </Page>
