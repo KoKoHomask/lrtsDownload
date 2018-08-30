@@ -20,7 +20,7 @@
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">
-            <ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center" Name="prWait"  Width="80" Height="80" IsActive="True" />
+            <ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center" Name="prWait"  Width="80" Height="80" IsActive="False" />
             <ScrollViewer>
                 <StackPanel Name="spResult">
                     
