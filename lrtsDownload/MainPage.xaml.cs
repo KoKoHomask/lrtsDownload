@@ -58,13 +58,20 @@ namespace lrtsDownload
             }
             else
             {
-                foreach(lrtsModel tmp in result)
+                spResult.Children.Add(new TextBlock()
                 {
-                    spResult.Children.Add(new TextBlock()
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Text = "下载链接有时效,如文件无法下载可尝试重新获取",
+                });
+                foreach (lrtsModel tmp in result)
+                {
+                    spResult.Children.Add(new HyperlinkButton()
                     {
                         HorizontalAlignment = HorizontalAlignment.Center,
                         VerticalAlignment = VerticalAlignment.Center,
-                        Text = tmp.FileName+" "+tmp.Url,
+                        Content=tmp.FileName,
+                        NavigateUri=new Uri( tmp.Url),
                     });
                 }
                 
