@@ -1,6 +1,7 @@
 ﻿using AngleSharp.Parser.Html;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -9,8 +10,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Xml;
+using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.Storage.Pickers;
+using Windows.System;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -38,7 +44,7 @@ namespace lrtsDownload
         {
             tbSearch.Width = this.ActualWidth / 3 * 2;//保证不同分辨率下搜索框能正确显示
         }
-
+        List<lrtsModel> lrts;
         private async void btnSearch_Click(object sender, RoutedEventArgs e)
         {
             prWait.IsActive = true;
@@ -58,12 +64,39 @@ namespace lrtsDownload
             }
             else
             {
+                lrts = result;
                 spResult.Children.Add(new TextBlock()
                 {
                     HorizontalAlignment = HorizontalAlignment.Center,
                     VerticalAlignment = VerticalAlignment.Center,
                     Text = "下载链接有时效,如文件无法下载可尝试重新获取",
                 });
+                var plxz = new HyperlinkButton()
+                {
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Content = "批量下载",
+                };
+                var xzjd = new TextBlock()
+                {
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Text = "下载进度:0/0",
+                    Visibility = Visibility.Collapsed,
+                };
+                plxz.Click += new RoutedEventHandler(async (h_sender, h_e) =>
+                {
+                    HttpDownloads httpDownloads = new HttpDownloads(FolderName);
+                    var dResult=await httpDownloads.DownloadFileList(lrts,(x)=> {
+                        xzjd.Text = "下载进度:" + (x.SuccessCount + x.FailCount).ToString() + "/" + x.AllCount;
+                        xzjd.Visibility = Visibility.Visible;
+                    });
+                    xzjd.Text = "下载完毕,总任务数量" + dResult.AllCount.ToString()
+                                + ",成功" + dResult.SuccessCount.ToString()
+                                + ",失败" + dResult.FailCount.ToString();
+                });
+                spResult.Children.Add(plxz);
+                spResult.Children.Add(xzjd);
                 foreach (lrtsModel tmp in result)
                 {
                     spResult.Children.Add(new HyperlinkButton()
@@ -77,6 +110,12 @@ namespace lrtsDownload
                 
             }
         }
+
+        private void Plxz_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         async Task<List<lrtsModel>> DoWork(string url)
         {
             List<lrtsModel> lst = new List<lrtsModel>();
@@ -169,6 +208,24 @@ namespace lrtsDownload
                 return http.GetHtml(item);
             });
             return result;
+        }
+        const string FolderName = "lrts";
+        private async void btnOpenFloader_Click(object sender, RoutedEventArgs e)
+        {
+            //FolderPicker p = new FolderPicker();
+
+            StorageFolder savePath;
+            var myMusic = await Windows.Storage.StorageLibrary.GetLibraryAsync(Windows.Storage.KnownLibraryId.Music);
+            var root = myMusic.SaveFolder;
+            var list = await root.GetFoldersAsync();
+            if (list.Where(x => x.Name == FolderName).FirstOrDefault() != null)
+                savePath = await root.GetFolderAsync(FolderName);
+            else
+                savePath = await root.CreateFolderAsync(FolderName);
+            var t = new FolderLauncherOptions();
+            await Launcher.LaunchFolderAsync(savePath, t);
+
+            //await FullTrustProcessLauncher.LaunchFullTrustProcessForCurrentAppAsync("lrts");
         }
     }
 }

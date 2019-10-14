@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace lrtsDownload
 {
+    public class DownloadResult
+    {
+        public int SuccessCount { get; set; }
+        public int FailCount { get; set; }
+        public int AllCount { get; set; }
+    }
     public class lrtsModel
     {
         public string FileName { get; set; }

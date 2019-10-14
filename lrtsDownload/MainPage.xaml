@@ -17,6 +17,7 @@
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
                 <TextBox Name="tbSearch"  Width="700" PlaceholderText="输入要解析的网址..."/>
                 <Button Name="btnSearch" Click="btnSearch_Click" Content="&#xE1A3;" Height="{Binding Path=Height,ElementName=tbSearch,Mode=OneWay}" FontFamily="Segoe MDL2 Assets" FontSize="22"/>
+                <Button Name="btnOpenFloader" Click="btnOpenFloader_Click" Content="&#xE737;" FontFamily="Segoe MDL2 Assets" FontSize="22" ToolTipService.ToolTip="打开下载文件夹" Height="{Binding Path=Height,ElementName=tbSearch,Mode=OneWay}" Margin=" 10,0,0,0"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">
