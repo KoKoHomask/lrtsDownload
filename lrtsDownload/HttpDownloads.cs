@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,7 +53,7 @@ namespace lrtsDownload
             try
             {
                 StorageFolder savePath;
-                var myMusic = await Windows.Storage.StorageLibrary.GetLibraryAsync(Windows.Storage.KnownLibraryId.Music);
+                var myMusic = await StorageLibrary.GetLibraryAsync(KnownLibraryId.Music);
                 var root = myMusic.SaveFolder;
                 var list = await root.GetFoldersAsync();
                 if (list.Where(x => x.Name == FolderName).FirstOrDefault() != null)

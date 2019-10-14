@@ -1,4 +1,5 @@
-﻿using AngleSharp.Parser.Html;
+﻿//using AngleSharp.Parser.Html;
+using AngleSharp.Html.Parser;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -163,7 +164,7 @@ namespace lrtsDownload
             __cookie = result.Cookie;
             string html = HttpUtility.HtmlDecode(result.Html);
             HtmlParser htmlParser = new HtmlParser();
-            var _lst = htmlParser.Parse(html).QuerySelectorAll("div.column1").Select(t => new lrtsFileModel()
+            var _lst = htmlParser.ParseDocument(html).QuerySelectorAll("div.column1").Select(t => new lrtsFileModel()
             {
                 player_r_name = t.QuerySelectorAll("input")[4].GetAttribute("value"),
                 sectionid = t.QuerySelectorAll("input")[3].GetAttribute("value"),
@@ -184,7 +185,7 @@ namespace lrtsDownload
             __cookie = result.Cookie;
             HtmlParser htmlParser = new HtmlParser();
             string tmp = null;
-            try { tmp = htmlParser.Parse(result.Html).QuerySelectorAll("ul#pul").FirstOrDefault().QuerySelectorAll("a").FirstOrDefault().GetAttribute("player-info"); } catch { }
+            try { tmp = htmlParser.ParseDocument(result.Html).QuerySelectorAll("ul#pul").FirstOrDefault().QuerySelectorAll("a").FirstOrDefault().GetAttribute("player-info"); } catch { }
             if (tmp != null)
             {
                 var array = tmp.Split('&');
